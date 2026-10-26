@@ -1,16 +1,26 @@
-import type { CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { useT } from '../i18n'
 import { DEFAULT_PARAMS, type FilterKind, type FilterParams } from '../lib/filters'
 
 interface Props {
   kind: FilterKind
   params: FilterParams
+  /** Number of photos in the queue — the apply-to-all button shows above 1. */
+  queueSize: number
   onKind: (kind: FilterKind) => void
   onParams: (params: FilterParams) => void
+  onApplyAll: () => void
 }
 
-export default function FilterPanel({ kind, params, onKind, onParams }: Props) {
+export default function FilterPanel({ kind, params, queueSize, onKind, onParams, onApplyAll }: Props) {
   const t = useT()
+  const [applied, setApplied] = useState(false)
+
+  useEffect(() => {
+    if (!applied) return
+    const id = setTimeout(() => setApplied(false), 2500)
+    return () => clearTimeout(id)
+  }, [applied])
 
   const cards: { kind: FilterKind; swatch: string; name: string; desc: string }[] = [
     { kind: 'none', swatch: 'none', name: t('filterNone'), desc: t('filterNoneDesc') },
@@ -64,7 +74,21 @@ export default function FilterPanel({ kind, params, onKind, onParams }: Props) {
         </div>
       ))}
 
-      <div style={{ marginTop: 10, textAlign: 'right' }}>
+      <div style={{ marginTop: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {queueSize > 1 ? (
+          <button
+            className="link-btn"
+            onClick={() => {
+              onApplyAll()
+              setApplied(true)
+            }}
+            disabled={off}
+          >
+            {applied ? t('appliedAll', { n: queueSize }) : t('applyAll')}
+          </button>
+        ) : (
+          <span />
+        )}
         <button className="link-btn" onClick={() => onParams(DEFAULT_PARAMS)} disabled={off}>
           {t('resetParams')}
         </button>

@@ -2,18 +2,17 @@ import { useRef, useState } from 'react'
 import { useT } from '../i18n'
 
 interface Props {
-  onFile: (file: File) => void
+  onFiles: (files: File[]) => void
   loading: boolean
 }
 
-export default function Dropzone({ onFile, loading }: Props) {
+export default function Dropzone({ onFiles, loading }: Props) {
   const t = useT()
   const [drag, setDrag] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const pick = (files: FileList | null) => {
-    const file = files?.[0]
-    if (file) onFile(file)
+    if (files && files.length > 0) onFiles(Array.from(files))
   }
 
   return (
@@ -39,6 +38,7 @@ export default function Dropzone({ onFile, loading }: Props) {
         ref={inputRef}
         type="file"
         accept=".jpg,.jpeg,.png,image/jpeg,image/png"
+        multiple
         hidden
         onChange={(e) => {
           pick(e.target.files)

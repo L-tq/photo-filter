@@ -21,6 +21,12 @@ npm run preview    # serve the build locally
 
 ## Features
 
+- **Batch processing** — drop many photos at once and switch between them in a
+  filmstrip below the preview. Each photo keeps its own filter settings and
+  EXIF edits; *Apply to all photos* copies the current look to every queued
+  photo. **Export all** develops every photo with its own settings and bundles
+  the results into one `mistdark-exports.zip` (duplicate filenames are
+  disambiguated automatically).
 - **Upload & before/after** — drag-and-drop (JPEG/PNG), draggable compare slider
   with a hold-to-view-original button.
 - **Zoom & pan** — wheel zoom anchored at the cursor, +/−/fit controls,
@@ -60,6 +66,7 @@ npm run preview    # serve the build locally
 | `xmp.ts`    | XMP inspection and AI-node removal (`@xmldom/xmldom`)             |
 | `aiDetect.ts` | two-tier keyword rules (strict for tool fields, conservative for free text) |
 | `filters.ts`| Black/White Mist render pipeline                                  |
+| `zip.ts`    | store-only ZIP writer for multi-photo exports                     |
 
 ## Development
 
@@ -72,7 +79,12 @@ node scripts/verify-export.mjs <original> <exported> \
 
 ## Notes & limits
 
-- JPEG and PNG are fully supported; other formats are rejected with a message.
+- JPEG and PNG are fully supported; other formats are rejected with a message
+  (skipped when loading in bulk).
+- Batch exports bundle the files uncompressed in a ZIP — the photos are already
+  compressed, so the archive is roughly the sum of the exports. Every queued
+  photo stays decoded in memory, so very large batches (hundreds of big RAW-
+  derived files) are best processed in groups.
 - Filtered PNG exports are re-encoded by the browser canvas, which always
   writes RGBA — pixels are identical, but the color type differs from an RGB
   source. Filtered JPEGs re-encode at the chosen quality (default 95).

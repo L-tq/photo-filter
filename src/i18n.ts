@@ -10,7 +10,11 @@ export type Lang = 'en' | 'zh'
 
 const en = {
   tagline: 'diffusion & metadata darkroom',
-  newPhoto: 'New photo',
+  clearAll: 'Clear all',
+  addPhotos: 'Add photos',
+  removePhoto: 'Remove photo',
+  applyAll: 'Apply to all photos',
+  appliedAll: 'Applied to {n} photos',
 
   // dropzone
   dropTitleA: 'Drop a photo',
@@ -103,6 +107,12 @@ const en = {
   aiRemovedNote: ' · AI tags removed',
   exportBtn: 'Export photo',
   exportBusy: 'Developing…',
+  exportAllBtn: 'Export all ({n})',
+  exportAllBusy: 'Developing {done}/{n}…',
+  exportedNote: 'Exported this session',
+  batchDone: 'Exported {n} photos',
+  batchAiRemoved: 'AI tags removed in {n} photo(s)',
+  loadFailedCount: '{n} file(s) could not be loaded and were skipped.',
   exportFailed: 'Export failed.',
   savedNote: 'Saved {name} ({n} bytes)',
   noteLossless: 'No filter applied — original image data kept bit-for-bit.',
@@ -120,7 +130,11 @@ const en = {
 
 const zh: typeof en = {
   tagline: '雾化滤镜 · 元数据暗房',
-  newPhoto: '换一张',
+  clearAll: '清空全部',
+  addPhotos: '添加照片',
+  removePhoto: '移除照片',
+  applyAll: '应用到全部照片',
+  appliedAll: '已应用到 {n} 张照片',
 
   dropTitleA: '把照片',
   dropTitleB: '放进暗房',
@@ -205,6 +219,12 @@ const zh: typeof en = {
   aiRemovedNote: ' · 将移除 AI 标记',
   exportBtn: '导出照片',
   exportBusy: '冲洗中…',
+  exportAllBtn: '导出全部（{n}）',
+  exportAllBusy: '正在冲洗 {done}/{n}…',
+  exportedNote: '本次会话已导出',
+  batchDone: '已导出 {n} 张照片',
+  batchAiRemoved: '已移除 {n} 张照片的 AI 标签',
+  loadFailedCount: '{n} 个文件无法加载，已跳过。',
   exportFailed: '导出失败。',
   savedNote: '已保存 {name}（{n} 字节）',
   noteLossless: '未应用滤镜 — 原始图像数据逐位保留。',
