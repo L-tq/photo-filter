@@ -1,0 +1,7 @@
+node_modules
+dist
+samples
+*.local
+.DS_Store
+tsconfig.tsbuildinfo
+.zcode/
